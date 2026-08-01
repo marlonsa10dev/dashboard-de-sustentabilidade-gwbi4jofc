@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T18:14:53.215Z",
+  "generatedAt": "2026-08-01T19:47:38.078Z",
   "collections": [
     {
       "name": "users",
@@ -401,6 +401,185 @@
         }
       ],
       "indexes": ["CREATE INDEX idx_esg_action_subtasks_action ON esg_action_subtasks (action)"]
+    },
+    {
+      "name": "esg_supplier_requirements",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "supplier",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "esg_suppliers"
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Conforme", "Não conforme", "Em análise"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_supplier_req_supplier ON esg_supplier_requirements (supplier)",
+        "CREATE INDEX idx_esg_supplier_req_status ON esg_supplier_requirements (status)"
+      ]
+    },
+    {
+      "name": "esg_policies",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "pillar",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Ambiental", "Social", "Governança"]
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "applicability",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Aplicável", "Parcialmente aplicável", "Não aplicável"]
+        },
+        {
+          "name": "document",
+          "type": "file",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_policies_pillar ON esg_policies (pillar)",
+        "CREATE INDEX idx_esg_policies_applicability ON esg_policies (applicability)"
+      ]
+    },
+    {
+      "name": "esg_notifications",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "type",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": [
+            "Ação atrasada",
+            "Prazo de mitigação",
+            "Checklist vencido",
+            "Avaliação de fornecedor"
+          ]
+        },
+        {
+          "name": "module",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Ações", "Riscos", "Checklists", "Fornecedores"]
+        },
+        {
+          "name": "route",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "read",
+          "type": "bool",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE INDEX idx_esg_notifications_read ON esg_notifications (read)"]
     }
   ]
 }
