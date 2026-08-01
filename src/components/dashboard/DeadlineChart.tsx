@@ -16,14 +16,26 @@ const chartConfig = {
   Governança: { label: 'Governança', color: 'hsl(var(--chart-3))' },
 } satisfies ChartConfig
 
-export function DeadlineChart({ actions }: { actions: EsgAction[] }) {
+export function DeadlineChart({
+  actions,
+  onDeadlineClick,
+}: {
+  actions: EsgAction[]
+  onDeadlineClick?: (deadline: string) => void
+}) {
   const deadlines = ['3', '6', '12']
   const data = deadlines.map((d) => ({
     deadline: `${d} meses`,
+    deadlineValue: d,
     Ambiental: actions.filter((a) => a.target_deadline === d && a.pillar === 'Ambiental').length,
     Social: actions.filter((a) => a.target_deadline === d && a.pillar === 'Social').length,
     Governança: actions.filter((a) => a.target_deadline === d && a.pillar === 'Governança').length,
   }))
+
+  const handleBarClick = (payload: any) => {
+    const dv = payload?.payload?.deadlineValue ?? payload?.deadlineValue
+    if (dv && onDeadlineClick) onDeadlineClick(dv)
+  }
 
   return (
     <Card className="shadow-subtle">
@@ -38,9 +50,27 @@ export function DeadlineChart({ actions }: { actions: EsgAction[] }) {
             <YAxis tickLine={false} axisLine={false} fontSize={12} allowDecimals={false} />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="Ambiental" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="Social" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="Governança" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} />
+            <Bar
+              dataKey="Ambiental"
+              fill="hsl(var(--chart-1))"
+              radius={[4, 4, 0, 0]}
+              className="cursor-pointer"
+              onClick={handleBarClick}
+            />
+            <Bar
+              dataKey="Social"
+              fill="hsl(var(--chart-2))"
+              radius={[4, 4, 0, 0]}
+              className="cursor-pointer"
+              onClick={handleBarClick}
+            />
+            <Bar
+              dataKey="Governança"
+              fill="hsl(var(--chart-3))"
+              radius={[4, 4, 0, 0]}
+              className="cursor-pointer"
+              onClick={handleBarClick}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

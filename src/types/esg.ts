@@ -11,6 +11,16 @@ export type Phase =
   | 'Manutenção'
   | 'Fornecedores'
 export type SupplierStatus = 'Ativo' | 'Inativo' | 'Em avaliação'
+export type SubtaskStatus = 'Pendente' | 'Em andamento' | 'Concluída'
+
+export interface ActionSubtask {
+  id: string
+  title: string
+  action: string
+  status: SubtaskStatus
+  created: string
+  updated: string
+}
 
 export interface EsgAction {
   id: string

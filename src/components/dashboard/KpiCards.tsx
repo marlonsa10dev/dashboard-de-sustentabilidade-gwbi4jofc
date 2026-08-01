@@ -8,9 +8,16 @@ interface KpiCardsProps {
   risks: RiskRecord[]
   checklist: ChecklistItem[]
   suppliers: Supplier[]
+  onInProgressClick?: () => void
 }
 
-export function KpiCards({ actions, risks, checklist, suppliers }: KpiCardsProps) {
+export function KpiCards({
+  actions,
+  risks,
+  checklist,
+  suppliers,
+  onInProgressClick,
+}: KpiCardsProps) {
   const readiness =
     actions.length > 0
       ? Math.round(actions.reduce((sum, a) => sum + a.progress, 0) / actions.length)
@@ -29,7 +36,13 @@ export function KpiCards({ actions, risks, checklist, suppliers }: KpiCardsProps
       icon: Target,
       color: 'text-emerald-600',
     },
-    { title: 'Ações em Andamento', value: inProgress, icon: Activity, color: 'text-blue-600' },
+    {
+      title: 'Ações em Andamento',
+      value: inProgress,
+      icon: Activity,
+      color: 'text-blue-600',
+      onClick: onInProgressClick,
+    },
     { title: 'Riscos Críticos', value: criticalRisks, icon: AlertTriangle, color: 'text-red-600' },
     {
       title: 'Checklists Conformes',
@@ -50,8 +63,12 @@ export function KpiCards({ actions, risks, checklist, suppliers }: KpiCardsProps
       {cards.map((card, i) => (
         <Card
           key={i}
-          className="animate-fade-in-up shadow-subtle"
+          className={cn(
+            'animate-fade-in-up shadow-subtle transition-shadow',
+            card.onClick && 'cursor-pointer hover:shadow-elevation',
+          )}
           style={{ animationDelay: `${i * 60}ms` }}
+          onClick={card.onClick}
         >
           <CardContent className="p-4">
             <div className="flex items-center justify-between mb-2">

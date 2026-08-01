@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useEsgData } from '@/hooks/use-esg-data'
 import { KpiCards } from '@/components/dashboard/KpiCards'
 import { PillarProgress } from '@/components/dashboard/PillarProgress'
@@ -8,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function Index() {
   const { actions, risks, checklist, suppliers, loading } = useEsgData()
+  const navigate = useNavigate()
 
   if (loading) {
     return (
@@ -42,11 +44,20 @@ export default function Index() {
         </p>
       </div>
 
-      <KpiCards actions={actions} risks={risks} checklist={checklist} suppliers={suppliers} />
+      <KpiCards
+        actions={actions}
+        risks={risks}
+        checklist={checklist}
+        suppliers={suppliers}
+        onInProgressClick={() => navigate('/acoes?status=Em andamento')}
+      />
 
       <div className="grid gap-6 lg:grid-cols-2">
         <PillarProgress actions={actions} />
-        <DeadlineChart actions={actions} />
+        <DeadlineChart
+          actions={actions}
+          onDeadlineClick={(deadline) => navigate(`/acoes?deadline=${deadline}`)}
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">

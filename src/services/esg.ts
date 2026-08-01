@@ -1,5 +1,5 @@
 import pb from '@/lib/pocketbase/client'
-import type { EsgAction, RiskRecord, ChecklistItem, Supplier } from '@/types/esg'
+import type { EsgAction, RiskRecord, ChecklistItem, Supplier, ActionSubtask } from '@/types/esg'
 
 export const getActions = () =>
   pb.collection('esg_actions').getFullList<EsgAction>({ sort: '-created' })
@@ -37,3 +37,15 @@ export const createSupplier = (data: Partial<Supplier>) =>
 export const updateSupplier = (id: string, data: Partial<Supplier>) =>
   pb.collection('esg_suppliers').update<Supplier>(id, data)
 export const deleteSupplier = (id: string) => pb.collection('esg_suppliers').delete(id)
+
+export const getSubtasks = () =>
+  pb.collection('esg_action_subtasks').getFullList<ActionSubtask>({ sort: '-created' })
+export const getSubtasksByAction = (actionId: string) =>
+  pb
+    .collection('esg_action_subtasks')
+    .getFullList<ActionSubtask>({ filter: `action = "${actionId}"` })
+export const createSubtask = (data: Partial<ActionSubtask>) =>
+  pb.collection('esg_action_subtasks').create<ActionSubtask>(data)
+export const updateSubtask = (id: string, data: Partial<ActionSubtask>) =>
+  pb.collection('esg_action_subtasks').update<ActionSubtask>(id, data)
+export const deleteSubtask = (id: string) => pb.collection('esg_action_subtasks').delete(id)
