@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T17:13:38.413Z",
+  "generatedAt": "2026-08-01T17:41:18.181Z",
   "collections": [
     {
       "name": "users",
@@ -42,6 +42,310 @@
       "indexes": [
         "CREATE UNIQUE INDEX `idx_tokenKey__pb_users_auth_` ON `users` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_email__pb_users_auth_` ON `users` (`email`) WHERE `email` != ''"
+      ]
+    },
+    {
+      "name": "esg_actions",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "pillar",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Ambiental", "Social", "Governança"]
+        },
+        {
+          "name": "responsible",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "target_deadline",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["3", "6", "12"]
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Planejada", "Em andamento", "Concluída", "Atrasada"]
+        },
+        {
+          "name": "progress",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_actions_pillar ON esg_actions (pillar)",
+        "CREATE INDEX idx_esg_actions_status ON esg_actions (status)",
+        "CREATE INDEX idx_esg_actions_deadline ON esg_actions (target_deadline)"
+      ]
+    },
+    {
+      "name": "esg_risks",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "pillar",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Ambiental", "Social", "Governança"]
+        },
+        {
+          "name": "likelihood",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "impact",
+          "type": "number",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "score",
+          "type": "number",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "level",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": ["Baixo", "Médio", "Alto", "Crítico"]
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Identificado", "Em tratamento", "Mitigado", "Crítico"]
+        },
+        {
+          "name": "mitigation_plan",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "responsible",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_risks_pillar ON esg_risks (pillar)",
+        "CREATE INDEX idx_esg_risks_status ON esg_risks (status)",
+        "CREATE INDEX idx_esg_risks_level ON esg_risks (level)"
+      ]
+    },
+    {
+      "name": "esg_checklist_items",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "phase",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": [
+            "Aquisição de Terreno",
+            "Licenciamento",
+            "Construção",
+            "Manutenção",
+            "Fornecedores"
+          ]
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Conforme", "Não conforme", "Em análise"]
+        },
+        {
+          "name": "responsible",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_checklist_phase ON esg_checklist_items (phase)",
+        "CREATE INDEX idx_esg_checklist_status ON esg_checklist_items (status)"
+      ]
+    },
+    {
+      "name": "esg_suppliers",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "name",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "risk_level",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Baixo", "Médio", "Alto", "Crítico"]
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Ativo", "Inativo", "Em avaliação"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": [
+        "CREATE INDEX idx_esg_suppliers_risk ON esg_suppliers (risk_level)",
+        "CREATE INDEX idx_esg_suppliers_status ON esg_suppliers (status)"
       ]
     }
   ]

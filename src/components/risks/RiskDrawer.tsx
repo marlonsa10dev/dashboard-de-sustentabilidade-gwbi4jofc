@@ -31,9 +31,9 @@ export function RiskDrawer({ risk, open, onOpenChange, onRefresh, canManage }: R
   }
 
   const getLevelBadge = (level: string) => {
-    if (level === 'critical') return 'bg-red-500 text-white'
-    if (level === 'high') return 'bg-orange-500 text-white'
-    if (level === 'medium') return 'bg-amber-500 text-slate-900'
+    if (level === 'Crítico') return 'bg-red-500 text-white'
+    if (level === 'Alto') return 'bg-orange-500 text-white'
+    if (level === 'Médio') return 'bg-amber-500 text-slate-900'
     return 'bg-emerald-500 text-white'
   }
 

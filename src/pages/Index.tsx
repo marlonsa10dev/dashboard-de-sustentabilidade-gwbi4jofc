@@ -1,12 +1,58 @@
-/* Home Page - Replace this page layout, components, content, behavior with what you want and translate to the language of the user */
-const Index = () => {
+import { useEsgData } from '@/hooks/use-esg-data'
+import { KpiCards } from '@/components/dashboard/KpiCards'
+import { PillarProgress } from '@/components/dashboard/PillarProgress'
+import { DeadlineChart } from '@/components/dashboard/DeadlineChart'
+import { RiskHeatmap } from '@/components/dashboard/RiskHeatmap'
+import { ComplianceChart } from '@/components/dashboard/ComplianceChart'
+import { Skeleton } from '@/components/ui/skeleton'
+
+export default function Index() {
+  const { actions, risks, checklist, suppliers, loading } = useEsgData()
+
+  if (loading) {
+    return (
+      <div className="container mx-auto py-6 px-4 space-y-6">
+        <div className="space-y-2">
+          <Skeleton className="h-8 w-56" />
+          <Skeleton className="h-4 w-80" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} className="h-24 rounded-xl" />
+          ))}
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Skeleton className="h-64 rounded-xl" />
+          <Skeleton className="h-64 rounded-xl" />
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <Skeleton className="h-72 rounded-xl" />
+          <Skeleton className="h-72 rounded-xl" />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-6">
-        This is a example page ready to be rewritten with your own content
-      </h1>
+    <div className="container mx-auto py-6 px-4 space-y-6">
+      <div className="animate-fade-in-down">
+        <h1 className="text-2xl font-bold text-slate-900">Visão Executiva</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          Monitoramento de prontidão para certificação ESG — Tower Companies
+        </p>
+      </div>
+
+      <KpiCards actions={actions} risks={risks} checklist={checklist} suppliers={suppliers} />
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <PillarProgress actions={actions} />
+        <DeadlineChart actions={actions} />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <RiskHeatmap risks={risks} />
+        <ComplianceChart checklist={checklist} />
+      </div>
     </div>
   )
 }
-
-export default Index
