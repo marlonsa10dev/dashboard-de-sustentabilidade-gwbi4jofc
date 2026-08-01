@@ -69,12 +69,11 @@ migrate(
       subtasksByAction[actionTitle].forEach(function (subtask) {
         var existing = app.findRecordsByFilter(
           'esg_action_subtasks',
-          'action = ? && title = ?',
+          'action = {:action} && title = {:title}',
           '',
-          1,
+          100,
           0,
-          actionId,
-          subtask.title,
+          { action: actionId, title: subtask.title },
         )
         if (existing.length > 0) return
 

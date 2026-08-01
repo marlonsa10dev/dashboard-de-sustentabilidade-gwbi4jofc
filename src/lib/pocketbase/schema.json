@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T17:55:27.637Z",
+  "generatedAt": "2026-08-01T18:05:23.295Z",
   "collections": [
     {
       "name": "users",
@@ -347,6 +347,54 @@
         "CREATE INDEX idx_esg_suppliers_risk ON esg_suppliers (risk_level)",
         "CREATE INDEX idx_esg_suppliers_status ON esg_suppliers (status)"
       ]
+    },
+    {
+      "name": "esg_action_subtasks",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "action",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "esg_actions"
+        },
+        {
+          "name": "status",
+          "type": "select",
+          "required": true,
+          "system": false,
+          "selectValues": ["Pendente", "Em andamento", "Concluída"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": ["CREATE INDEX idx_esg_action_subtasks_action ON esg_action_subtasks (action)"]
     }
   ]
 }
