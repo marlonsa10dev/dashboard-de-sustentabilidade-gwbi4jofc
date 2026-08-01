@@ -73,8 +73,7 @@ migrate(
           '',
           1,
           0,
-          actionId,
-          subtask.title,
+          [actionId, subtask.title],
         )
         if (existing.length > 0) return
 
