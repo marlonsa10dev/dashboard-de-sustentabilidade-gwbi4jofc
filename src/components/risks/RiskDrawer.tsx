@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { deleteRisk } from '@/services/esg'
 import type { RiskRecord } from '@/types/esg'
-import { Trash2, Shield, Calendar } from 'lucide-react'
+import { Trash2, Shield, Calendar, Pencil } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface RiskDrawerProps {
@@ -12,9 +12,17 @@ interface RiskDrawerProps {
   onOpenChange: (open: boolean) => void
   onRefresh: () => void
   canManage: boolean
+  onEdit?: (risk: RiskRecord) => void
 }
 
-export function RiskDrawer({ risk, open, onOpenChange, onRefresh, canManage }: RiskDrawerProps) {
+export function RiskDrawer({
+  risk,
+  open,
+  onOpenChange,
+  onRefresh,
+  canManage,
+  onEdit,
+}: RiskDrawerProps) {
   if (!risk) return null
 
   const handleDelete = async () => {
@@ -91,7 +99,17 @@ export function RiskDrawer({ risk, open, onOpenChange, onRefresh, canManage }: R
           </div>
 
           {canManage && (
-            <div className="pt-6 border-t flex justify-end">
+            <div className="pt-6 border-t flex justify-end gap-2">
+              {onEdit && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onEdit(risk)}
+                  className="text-xs"
+                >
+                  <Pencil className="h-3.5 w-3.5 mr-1.5" /> Editar
+                </Button>
+              )}
               <Button variant="destructive" size="sm" onClick={handleDelete} className="text-xs">
                 <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Excluir Risco
               </Button>

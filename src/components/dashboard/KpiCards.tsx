@@ -9,6 +9,8 @@ interface KpiCardsProps {
   checklist: ChecklistItem[]
   suppliers: Supplier[]
   onInProgressClick?: () => void
+  onCriticalRisksClick?: () => void
+  onCompliantChecksClick?: () => void
 }
 
 export function KpiCards({
@@ -17,6 +19,8 @@ export function KpiCards({
   checklist,
   suppliers,
   onInProgressClick,
+  onCriticalRisksClick,
+  onCompliantChecksClick,
 }: KpiCardsProps) {
   const readiness =
     actions.length > 0
@@ -43,12 +47,19 @@ export function KpiCards({
       color: 'text-blue-600',
       onClick: onInProgressClick,
     },
-    { title: 'Riscos Críticos', value: criticalRisks, icon: AlertTriangle, color: 'text-red-600' },
+    {
+      title: 'Riscos Críticos',
+      value: criticalRisks,
+      icon: AlertTriangle,
+      color: 'text-red-600',
+      onClick: onCriticalRisksClick,
+    },
     {
       title: 'Checklists Conformes',
       value: compliantChecks,
       icon: CheckCircle,
       color: 'text-emerald-600',
+      onClick: onCompliantChecksClick,
     },
     {
       title: 'Fornecedores em Risco',

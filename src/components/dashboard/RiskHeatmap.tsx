@@ -23,7 +23,13 @@ const LEGEND = [
   { label: 'Crítico', color: 'bg-red-500' },
 ]
 
-export function RiskHeatmap({ risks }: { risks: RiskRecord[] }) {
+export function RiskHeatmap({
+  risks,
+  onCellClick,
+}: {
+  risks: RiskRecord[]
+  onCellClick?: (level: string) => void
+}) {
   const cells: { prob: number; impact: number; score: number; count: number }[] = []
   for (let prob = 5; prob >= 1; prob--) {
     for (let impact = 1; impact <= 5; impact++) {
@@ -51,10 +57,12 @@ export function RiskHeatmap({ risks }: { risks: RiskRecord[] }) {
                 <div
                   key={`${cell.prob}-${cell.impact}`}
                   className={cn(
-                    'aspect-square rounded-md flex flex-col items-center justify-center transition-all hover:scale-105 cursor-default',
+                    'aspect-square rounded-md flex flex-col items-center justify-center transition-all hover:scale-105',
+                    onCellClick ? 'cursor-pointer' : 'cursor-default',
                     getCellColor(cell.score),
                     cell.count === 0 && 'opacity-35',
                   )}
+                  onClick={() => onCellClick?.(getLevelLabel(cell.score))}
                 >
                   {cell.count > 0 && (
                     <span className="text-sm font-bold leading-none">{cell.count}</span>

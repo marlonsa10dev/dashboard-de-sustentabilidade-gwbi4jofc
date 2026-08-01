@@ -59,6 +59,7 @@ export interface ChecklistItem {
   status: ChecklistStatus
   responsible: string
   due_date: string
+  evidence: string
   created: string
   updated: string
 }

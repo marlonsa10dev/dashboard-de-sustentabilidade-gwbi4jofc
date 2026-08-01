@@ -20,12 +20,24 @@ const PHASES: { key: string; short: string }[] = [
   { key: 'Fornecedores', short: 'Fornecedores' },
 ]
 
-export function ComplianceChart({ checklist }: { checklist: ChecklistItem[] }) {
+export function ComplianceChart({
+  checklist,
+  onPhaseClick,
+}: {
+  checklist: ChecklistItem[]
+  onPhaseClick?: (phase: string) => void
+}) {
   const data = PHASES.map((phase) => {
     const items = checklist.filter((c) => c.phase === phase.key)
     const conforme = items.filter((c) => c.status === 'Conforme').length
     const pct = items.length > 0 ? Math.round((conforme / items.length) * 100) : 0
-    return { phase: phase.short, conformidade: pct, conforme, total: items.length }
+    return {
+      phase: phase.short,
+      phaseKey: phase.key,
+      conformidade: pct,
+      conforme,
+      total: items.length,
+    }
   })
 
   const getBarColor = (pct: number) => {
@@ -52,7 +64,15 @@ export function ComplianceChart({ checklist }: { checklist: ChecklistItem[] }) {
                 return [`${value}% (${payload.conforme}/${payload.total})`, 'Conformidade']
               }}
             />
-            <Bar dataKey="conformidade" radius={[4, 4, 0, 0]}>
+            <Bar
+              dataKey="conformidade"
+              radius={[4, 4, 0, 0]}
+              className={onPhaseClick ? 'cursor-pointer' : ''}
+              onClick={(payload: any) => {
+                const pk = payload?.payload?.phaseKey
+                if (pk && onPhaseClick) onPhaseClick(pk)
+              }}
+            >
               {data.map((entry, i) => (
                 <Cell key={i} fill={getBarColor(entry.conformidade)} />
               ))}

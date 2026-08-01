@@ -23,11 +23,15 @@ export const getChecklistItems = () =>
   pb.collection('esg_checklist_items').getFullList<ChecklistItem>({ sort: '-created' })
 export const getChecklistItem = (id: string) =>
   pb.collection('esg_checklist_items').getOne<ChecklistItem>(id)
-export const createChecklistItem = (data: Partial<ChecklistItem>) =>
-  pb.collection('esg_checklist_items').create<ChecklistItem>(data)
-export const updateChecklistItem = (id: string, data: Partial<ChecklistItem>) =>
-  pb.collection('esg_checklist_items').update<ChecklistItem>(id, data)
+export const createChecklistItem = (data: FormData | Partial<ChecklistItem>) =>
+  pb.collection('esg_checklist_items').create<ChecklistItem>(data as any)
+export const updateChecklistItem = (id: string, data: FormData | Partial<ChecklistItem>) =>
+  pb.collection('esg_checklist_items').update<ChecklistItem>(id, data as any)
 export const deleteChecklistItem = (id: string) => pb.collection('esg_checklist_items').delete(id)
+export const getChecklistEvidenceUrl = (item: ChecklistItem) =>
+  item.evidence
+    ? `${pb.baseURL}/api/files/esg_checklist_items/${item.id}/${item.evidence}?token=${pb.authStore.token}`
+    : null
 
 export const getSuppliers = () =>
   pb.collection('esg_suppliers').getFullList<Supplier>({ sort: '-created' })

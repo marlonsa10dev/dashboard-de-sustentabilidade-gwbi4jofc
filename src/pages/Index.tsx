@@ -50,6 +50,8 @@ export default function Index() {
         checklist={checklist}
         suppliers={suppliers}
         onInProgressClick={() => navigate('/acoes?status=Em andamento')}
+        onCriticalRisksClick={() => navigate('/riscos?level=Crítico')}
+        onCompliantChecksClick={() => navigate('/checklists?status=Conforme')}
       />
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -61,8 +63,11 @@ export default function Index() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <RiskHeatmap risks={risks} />
-        <ComplianceChart checklist={checklist} />
+        <RiskHeatmap risks={risks} onCellClick={(level) => navigate(`/riscos?level=${level}`)} />
+        <ComplianceChart
+          checklist={checklist}
+          onPhaseClick={(phase) => navigate(`/checklists?phase=${encodeURIComponent(phase)}`)}
+        />
       </div>
     </div>
   )

@@ -7,6 +7,8 @@ import { AuthProvider, useAuth } from '@/hooks/use-auth'
 import Index from './pages/Index'
 import Login from './pages/Login'
 import Actions from './pages/Actions'
+import Risks from './pages/Risks'
+import Checklists from './pages/Checklists'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 
@@ -45,6 +47,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Actions />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/riscos"
+              element={
+                <ProtectedRoute>
+                  <Risks />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checklists"
+              element={
+                <ProtectedRoute>
+                  <Checklists />
                 </ProtectedRoute>
               }
             />
