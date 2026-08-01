@@ -52,6 +52,7 @@ export default function Index() {
         onInProgressClick={() => navigate('/acoes?status=Em andamento')}
         onCriticalRisksClick={() => navigate('/riscos?level=Crítico')}
         onCompliantChecksClick={() => navigate('/checklists?status=Conforme')}
+        onAtRiskSuppliersClick={() => navigate('/fornecedores?risk_level=Em risco')}
       />
 
       <div className="grid gap-6 lg:grid-cols-2">

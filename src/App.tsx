@@ -9,6 +9,9 @@ import Login from './pages/Login'
 import Actions from './pages/Actions'
 import Risks from './pages/Risks'
 import Checklists from './pages/Checklists'
+import Suppliers from './pages/Suppliers'
+import Policies from './pages/Policies'
+import Reports from './pages/Reports'
 import NotFound from './pages/NotFound'
 import Layout from './components/Layout'
 
@@ -63,6 +66,30 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <Checklists />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/fornecedores"
+              element={
+                <ProtectedRoute>
+                  <Suppliers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/politicas"
+              element={
+                <ProtectedRoute>
+                  <Policies />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/relatorios"
+              element={
+                <ProtectedRoute>
+                  <Reports />
                 </ProtectedRoute>
               }
             />

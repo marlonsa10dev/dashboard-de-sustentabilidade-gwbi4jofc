@@ -39,6 +39,7 @@ export function SupplierList({ suppliers, onEdit, onDelete, onRequirements }: Su
         <TableHeader>
           <TableRow>
             <TableHead className="text-xs">Nome</TableHead>
+            <TableHead className="text-xs hidden md:table-cell">CNPJ</TableHead>
             <TableHead className="text-xs hidden md:table-cell">Categoria</TableHead>
             <TableHead className="text-xs">Risco</TableHead>
             <TableHead className="text-xs">Status</TableHead>
@@ -50,6 +51,9 @@ export function SupplierList({ suppliers, onEdit, onDelete, onRequirements }: Su
             <TableRow key={s.id} className="hover:bg-slate-50/50">
               <TableCell className="text-sm font-medium text-slate-900 max-w-[200px] truncate">
                 {s.name}
+              </TableCell>
+              <TableCell className="text-xs text-slate-600 hidden md:table-cell">
+                {s.cnpj || '—'}
               </TableCell>
               <TableCell className="text-xs text-slate-600 hidden md:table-cell">
                 {s.category || '—'}

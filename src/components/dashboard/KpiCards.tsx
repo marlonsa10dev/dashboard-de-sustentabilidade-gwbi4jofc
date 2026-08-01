@@ -11,6 +11,7 @@ interface KpiCardsProps {
   onInProgressClick?: () => void
   onCriticalRisksClick?: () => void
   onCompliantChecksClick?: () => void
+  onAtRiskSuppliersClick?: () => void
 }
 
 export function KpiCards({
@@ -21,6 +22,7 @@ export function KpiCards({
   onInProgressClick,
   onCriticalRisksClick,
   onCompliantChecksClick,
+  onAtRiskSuppliersClick,
 }: KpiCardsProps) {
   const readiness =
     actions.length > 0
@@ -66,6 +68,7 @@ export function KpiCards({
       value: atRiskSuppliers,
       icon: Building,
       color: 'text-orange-600',
+      onClick: onAtRiskSuppliersClick,
     },
   ]
 

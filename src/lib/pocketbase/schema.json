@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-01T19:47:38.078Z",
+  "generatedAt": "2026-08-01T19:57:27.964Z",
   "collections": [
     {
       "name": "users",
@@ -347,6 +347,12 @@
           "required": false,
           "system": false,
           "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "cnpj",
+          "type": "text",
+          "required": false,
+          "system": false
         }
       ],
       "indexes": [

@@ -67,9 +67,49 @@ export interface ChecklistItem {
 export interface Supplier {
   id: string
   name: string
+  cnpj: string
   category: string
   risk_level: RiskLevel
   status: SupplierStatus
+  created: string
+  updated: string
+}
+
+export type Applicability = 'Aplicável' | 'Parcialmente aplicável' | 'Não aplicável'
+export type NotificationType =
+  | 'Ação atrasada'
+  | 'Prazo de mitigação'
+  | 'Checklist vencido'
+  | 'Avaliação de fornecedor'
+export type NotificationModule = 'Ações' | 'Riscos' | 'Checklists' | 'Fornecedores'
+
+export interface Policy {
+  id: string
+  title: string
+  pillar: Pillar
+  description: string
+  applicability: Applicability
+  document: string
+  created: string
+  updated: string
+}
+
+export interface SupplierRequirement {
+  id: string
+  supplier: string
+  name: string
+  status: ChecklistStatus
+  created: string
+  updated: string
+}
+
+export interface EsgNotification {
+  id: string
+  title: string
+  type: NotificationType
+  module: NotificationModule
+  route: string
+  read: boolean
   created: string
   updated: string
 }

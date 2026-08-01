@@ -1,7 +1,17 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
-import { Leaf, LogOut, LayoutDashboard, ListTodo, ShieldAlert, ClipboardCheck } from 'lucide-react'
+import {
+  Leaf,
+  LogOut,
+  LayoutDashboard,
+  ListTodo,
+  ShieldAlert,
+  ClipboardCheck,
+  Building,
+  FileText,
+  BarChart3,
+} from 'lucide-react'
 
 export default function Layout() {
   const { user, signOut, isAuthenticated } = useAuth()
@@ -45,6 +55,21 @@ export default function Layout() {
                 <Button asChild variant="ghost" size="sm" className="text-xs h-8">
                   <Link to="/checklists">
                     <ClipboardCheck className="h-3.5 w-3.5 mr-1" /> Checklists
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm" className="text-xs h-8">
+                  <Link to="/fornecedores">
+                    <Building className="h-3.5 w-3.5 mr-1" /> Fornecedores
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm" className="text-xs h-8">
+                  <Link to="/politicas">
+                    <FileText className="h-3.5 w-3.5 mr-1" /> Políticas
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="sm" className="text-xs h-8">
+                  <Link to="/relatorios">
+                    <BarChart3 className="h-3.5 w-3.5 mr-1" /> Relatórios
                   </Link>
                 </Button>
               </nav>

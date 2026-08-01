@@ -25,6 +25,7 @@ interface SupplierFormProps {
 
 export function SupplierForm({ open, onOpenChange, editingSupplier, onSaved }: SupplierFormProps) {
   const [name, setName] = useState('')
+  const [cnpj, setCnpj] = useState('')
   const [category, setCategory] = useState('')
   const [riskLevel, setRiskLevel] = useState<RiskLevel>('Médio')
   const [status, setStatus] = useState<SupplierStatus>('Ativo')
@@ -35,11 +36,13 @@ export function SupplierForm({ open, onOpenChange, editingSupplier, onSaved }: S
     if (open) {
       if (editingSupplier) {
         setName(editingSupplier.name)
+        setCnpj(editingSupplier.cnpj || '')
         setCategory(editingSupplier.category || '')
         setRiskLevel(editingSupplier.risk_level)
         setStatus(editingSupplier.status)
       } else {
         setName('')
+        setCnpj('')
         setCategory('')
         setRiskLevel('Médio')
         setStatus('Ativo')
@@ -56,7 +59,7 @@ export function SupplierForm({ open, onOpenChange, editingSupplier, onSaved }: S
 
     setSaving(true)
     try {
-      const data = { name: name.trim(), category: category.trim(), risk_level: riskLevel, status }
+      const data = { name: name.trim(), cnpj: cnpj.trim(), category, risk_level: riskLevel, status }
       if (editingSupplier) {
         await updateSupplier(editingSupplier.id, data)
         toast.success('Fornecedor atualizado.')
@@ -93,13 +96,26 @@ export function SupplierForm({ open, onOpenChange, editingSupplier, onSaved }: S
             {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label className="text-xs">Categoria</Label>
+            <Label className="text-xs">CNPJ</Label>
             <Input
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Categoria"
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+              placeholder="00.000.000/0000-00"
               className="text-sm"
             />
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs">Categoria</Label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger className="text-sm">
+                <SelectValue placeholder="Selecione a categoria" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="obra">Obra</SelectItem>
+                <SelectItem value="manutenção">Manutenção</SelectItem>
+                <SelectItem value="outros">Outros</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
