@@ -54,7 +54,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await pb.collection('users').authWithPassword(email, password)
+      const result = await pb.collection('users').authWithPassword(email, password)
+      if (result.record.active === false) {
+        pb.authStore.clear()
+        return { error: { message: 'Usuário desativado. Contate o administrador.' } }
+      }
       return { error: null }
     } catch (error) {
       return { error }

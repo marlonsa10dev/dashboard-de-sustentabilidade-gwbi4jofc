@@ -17,6 +17,7 @@ import Layout from './components/Layout'
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated, loading } = useAuth()
+
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center bg-slate-50">
